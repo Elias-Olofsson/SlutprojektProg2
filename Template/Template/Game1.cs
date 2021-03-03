@@ -11,7 +11,6 @@ namespace Template
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        //KOmentar
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
