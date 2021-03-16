@@ -71,7 +71,7 @@ namespace Template
             base.Update(); //gör så att den updatera nu efter istället
         }
 
-        public override void Draw(SpriteBatch spriteBatch) //alla här gör så att bara det första läget ritar ut spelaren
+        public override void Draw(SpriteBatch spriteBatch) //allt här ritar ut spelaren i båda originallägena
         {
             if (behavior == PlayerBehavior.Light)
             {

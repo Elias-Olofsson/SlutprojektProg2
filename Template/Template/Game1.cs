@@ -55,8 +55,8 @@ namespace Template
             Texture2D blueBox = Content.Load<Texture2D>("BlåLåda"); //laddar in de blå färgen
             Texture2D lightGreenBox = Content.Load<Texture2D>("LjusGrönLåda"); //laddar in den ljusgröna färgen
             Texture2D darkGreenBox = Content.Load<Texture2D>("MörkGrönLåda"); //laddar in den mörkgröna färgen
-            Texture2D blackBox = Content.Load<Texture2D>("SvartLåda"); //laddar in den grå färgen
-
+            Texture2D blackBox = Content.Load<Texture2D>("SvartLåda"); //laddar in den svarta färgen
+            Texture2D greyBox = Content.Load<Texture2D>("GråLåda"); //laddar in den grå färgen
             player = new Player(redBox, new Vector2(10, 10), new Point(25, 25)); //bestämmer position, storlek och att den ska ha utseendet av den röda lådan
 
             gameObjects.Add(player);
