@@ -12,7 +12,7 @@ namespace Template
 {
     class Bullet
     {
-        List<Enemies> fiender = new List<Enemies>();
-        public gämför FindObjekt
+        //List<Enemies> EnemyList = new List<Enemies>();
+        //public compare FindObjekt
     }
 }

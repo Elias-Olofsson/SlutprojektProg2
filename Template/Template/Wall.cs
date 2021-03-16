@@ -9,7 +9,11 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Template
 {
-    class Wall
+    class Wall : GameObject //klassen ärver från GameObjekt
     {
+        public Wall(Texture2D texture, Vector2 pos, Point point) : base(texture, pos, point)
+        {
+
+        }
     }
 }
