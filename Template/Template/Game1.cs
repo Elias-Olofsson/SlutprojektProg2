@@ -57,6 +57,7 @@ namespace Template
             Texture2D darkGreenBox = Content.Load<Texture2D>("MörkGrönLåda"); //laddar in den mörkgröna färgen
             Texture2D blackBox = Content.Load<Texture2D>("SvartLåda"); //laddar in den svarta färgen
             Texture2D greyBox = Content.Load<Texture2D>("GråLåda"); //laddar in den grå färgen
+            Texture2D orangeBox = Content.Load<Texture2D>("GråLåda"); //laddar in den grå färgen
             player = new Player(redBox, new Vector2(10, 10), new Point(25, 25)); //bestämmer position, storlek och att den ska ha utseendet av den röda lådan
 
             gameObjects.Add(player);
@@ -95,14 +96,13 @@ namespace Template
 
             Player player = gameObjects[0] as Player; //gör så att spelaren/den röda lådan får position 1 i listan
 
-            for (int i = 1; i < gameObjects.Count; i++) //för alla utom spelaren så avslutas programmet om spelaren nuddar den
+            for (int i = 1; i < gameObjects.Count; i++) //för varje spel objekt som spelaren går in i stoppas spelaren
             {
                 if (player.Rectangle.Intersects(gameObjects[i].Rectangle))
                 {
-                    Exit();
+                    player.clearPath = false;
                 }
             }
-
             base.Update(gameTime);
         }
 
