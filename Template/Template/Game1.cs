@@ -17,6 +17,8 @@ namespace Template
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Player player;
+        Light light;
+        Heavy heavy;
         List<GameObject> gameObjects;
 
         //KOmentar
@@ -59,8 +61,9 @@ namespace Template
             Texture2D greyBox = Content.Load<Texture2D>("GråLåda"); //laddar in den grå färgen
             Texture2D orangeBox = Content.Load<Texture2D>("GråLåda"); //laddar in den grå färgen
             player = new Player(redBox, new Vector2(10, 10), new Point(25, 25)); //bestämmer position, storlek och att den ska ha utseendet av den röda lådan
-
+            light = new Light(greyBox, new Vector2(23,31), new Point(12, 4));
             gameObjects.Add(player);
+            gameObjects.Add(light);
 
             gameObjects.Add(new Wall(blueBox, new Vector2(0, 0), new Point(10, 10))); //alla till radbytet är väggar med deras storlekar och positioner
 
@@ -93,14 +96,16 @@ namespace Template
             {
                 gameObject.Update();
             }
-
             Player player = gameObjects[0] as Player; //gör så att spelaren/den röda lådan får position 1 i listan
 
             for (int i = 1; i < gameObjects.Count; i++) //för varje spel objekt som spelaren går in i stoppas spelaren
             {
-                if (player.Rectangle.Intersects(gameObjects[i].Rectangle))
+                if(!(gameObjects[i] is Light || gameObjects[i] is Heavy))//gör så att spelaren inte koliderar med light och heavy
                 {
-                    player.clearPath = false;
+                    if (player.Rectangle.Intersects(gameObjects[i].Rectangle))//gör så att spelaren koliderar med alla andra object i gameobject
+                    {
+                        player.Collision();
+                    }
                 }
             }
             base.Update(gameTime);

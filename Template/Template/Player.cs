@@ -11,110 +11,49 @@ namespace Template
 {
     class Player : GameObject //klassen ärver från GameObjekt
     {
-        private bool clearPath;
-        bool clearPath = true;
-        public PlayerBehavior behavior = PlayerBehavior.Light; //gör så att man börjar på läge nr 0
+        public static PlayerBehavior behavior = PlayerBehavior.Light; //gör så att man börjar på läge nr 0
+
+        float speedMultiplier = 1;
+
+        Vector2 lastMove;
+
         public Player(Texture2D texture, Vector2 pos, Point point) : base(texture, pos, point) //olika grejer som spelaren ska ha
         {
-
+            
         }
 
         public override void Update() //gör så att den inte updateras 
         {
+            lastMove = new Vector2();
+
             KeyboardState kstate = Keyboard.GetState(); //läser om någon knapp trycks in
-            if (behavior == PlayerBehavior.Light) //bestämmer hastigheten och håll om spelaren är light och hållet bestäms av om något är i vägen
+            if (behavior == PlayerBehavior.Light) //bestämmer hastigheten och positionsändring om spelaren är light och positionsändringenS bestäms av om något är i vägen
             {
-                if (kstate.IsKeyDown(Keys.W))
-                {
-                    if (clearPath == true)
-                    {
-                        pos.Y -= 2;
-                    }
-                    else
-                    {
-                        pos.Y += 2;
-                    }
-                }
-                else if (kstate.IsKeyDown(Keys.A))
-                {
-                    if (clearPath == true)
-                    {
-                        pos.Y -= 2;
-                    }
-                    else
-                    {
-                        pos.Y += 2;
-                    }
-                }
-                else if (kstate.IsKeyDown(Keys.D))
-                {
-                    if (clearPath == true)
-                    {
-                        pos.Y += 2;
-                    }
-                    else
-                    {
-                        pos.Y -= 2;
-                    }
-                }
-                else if (kstate.IsKeyDown(Keys.S))
-                {
-                    if (clearPath == true)
-                    {
-                        pos.Y += 2;
-                    }
-                    else
-                    {
-                        pos.Y -= 2;
-                    }
-                }
+                speedMultiplier = 2;
             }
-            else 
+            else
             {
-                if (kstate.IsKeyDown(Keys.W))
-                {
-                    if (clearPath == true)
-                    {
-                        pos.Y -= 1;
-                    }
-                    else
-                    {
-                        pos.Y += 1;
-                    }
-                }
-                else if (kstate.IsKeyDown(Keys.A))
-                {
-                    if (clearPath == true)
-                    {
-                        pos.Y -= 1;
-                    }
-                    else
-                    {
-                        pos.Y += 1;
-                    }
-                }
-                else if (kstate.IsKeyDown(Keys.D))
-                {
-                    if (clearPath == true)
-                    {
-                        pos.Y += 1;
-                    }
-                    else
-                    {
-                        pos.Y -= 1;
-                    }
-                }
-                else if (kstate.IsKeyDown(Keys.S))
-                {
-                    if (clearPath == true)
-                    {
-                        pos.Y += 1;
-                    }
-                    else
-                    {
-                        pos.Y -= 1;
-                    }
-                }
+                speedMultiplier = 1;
+            }
+            if (kstate.IsKeyDown(Keys.W))
+            {
+                pos.Y -= 1 * speedMultiplier;
+                lastMove.Y -= 1 * speedMultiplier;
+            }
+            else if (kstate.IsKeyDown(Keys.A))
+            {
+                pos.X -= 1 * speedMultiplier;
+                lastMove.X -= 1 * speedMultiplier;
+            }
+            else if (kstate.IsKeyDown(Keys.D))
+            {
+                pos.X += 1 * speedMultiplier;
+                lastMove.X += 1 * speedMultiplier;
+            }
+            else if (kstate.IsKeyDown(Keys.S))
+            {
+                pos.Y += 1 * speedMultiplier;
+                lastMove.Y += 1 * speedMultiplier;
             }
 
             if (kstate.IsKeyDown(Keys.NumPad0)) //alla här gör så att du kan trycka för att ändra lägen
@@ -125,7 +64,6 @@ namespace Template
             {
                 behavior = PlayerBehavior.Heavy;
             }
-            clearPath = true;
 
             base.Update(); //gör så att den updatera nu efter istället
         }
@@ -145,7 +83,7 @@ namespace Template
         }
         public void Collision()
         {
-            clearPath = false;
+            pos += lastMove * -1;
         }
     }
 

@@ -12,10 +12,9 @@ namespace Template
 {
     class GameObject
     {
-        protected Texture2D texture; //textur för GameObject
-        protected Vector2 pos; //position för GameObject
-        protected Rectangle rectangle; //rectangel för GameObject
-
+        protected Texture2D texture; //textur
+        protected Vector2 pos; //position
+        protected Rectangle rectangle; //rektangel
         public Rectangle Rectangle
         {
             get { return rectangle; }
@@ -33,7 +32,7 @@ namespace Template
             rectangle.Location = pos.ToPoint(); //syncar objectets rectangle med pos 
         }
 
-        public virtual void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)//ritar ut spritebatcharna
         {
             spriteBatch.Draw(texture, rectangle, Color.White);
         }
