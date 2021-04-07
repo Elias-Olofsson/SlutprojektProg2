@@ -21,7 +21,6 @@ namespace Template
         Heavy heavy;
         List<GameObject> gameObjects;
 
-        //KOmentar
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -38,7 +37,6 @@ namespace Template
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            Vector2 rödLådaPos = new Vector2(500, 0);
             gameObjects = new List<GameObject>();
 
             base.Initialize();
@@ -61,8 +59,9 @@ namespace Template
             Texture2D greyBox = Content.Load<Texture2D>("GråLåda"); //laddar in den grå färgen
             Texture2D orangeBox = Content.Load<Texture2D>("GråLåda"); //laddar in den grå färgen
             player = new Player(redBox, new Vector2(10, 10), new Point(25, 25)); //bestämmer position, storlek och att den ska ha utseendet av den röda lådan
-            light = new Light(greyBox, new Vector2(23,31), new Point(12, 4));
+            light = new Light(greyBox, new Vector2(23,31), new Point(12, 4), player);
             gameObjects.Add(player);
+
             gameObjects.Add(light);
 
             gameObjects.Add(new Wall(blueBox, new Vector2(0, 0), new Point(10, 10))); //alla till radbytet är väggar med deras storlekar och positioner
