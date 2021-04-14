@@ -57,14 +57,30 @@ namespace Template
             Texture2D darkGreenBox = Content.Load<Texture2D>("MörkGrönLåda"); //laddar in den mörkgröna färgen
             Texture2D blackBox = Content.Load<Texture2D>("SvartLåda"); //laddar in den svarta färgen
             Texture2D greyBox = Content.Load<Texture2D>("GråLåda"); //laddar in den grå färgen
-            Texture2D orangeBox = Content.Load<Texture2D>("GråLåda"); //laddar in den grå färgen
+            Texture2D orangeBox = Content.Load<Texture2D>("OrangeLåda"); //laddar in den grå färgen
             player = new Player(redBox, new Vector2(10, 10), new Point(25, 25)); //bestämmer position, storlek och att den ska ha utseendet av den röda lådan
             light = new Light(greyBox, new Vector2(23,31), new Point(12, 4), player);
+            heavy = new Heavy(blackBox, new Vector2(light.Rectangle.X), new Point(20, 4), player);
             gameObjects.Add(player);
-
             gameObjects.Add(light);
 
             gameObjects.Add(new Wall(blueBox, new Vector2(0, 0), new Point(10, 10))); //alla till radbytet är väggar med deras storlekar och positioner
+
+            bool changed = new bool();
+            while(Player.behavior == PlayerBehavior.Heavy)
+            {
+                gameObjects.Remove(light);
+                gameObjects.Add(heavy);
+                changed = true;
+                break;
+            }
+            while(Player.behavior == PlayerBehavior.Light & changed == true)
+            {
+                gameObjects.Remove(heavy);
+                gameObjects.Add(light);
+                break;
+            }
+            
 
             // TODO: use this.Content to load your game content here 
         }

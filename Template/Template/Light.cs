@@ -27,24 +27,31 @@ namespace Template
                 {
                     if (kstate.IsKeyDown(Keys.W))
                     {
-                        pos.Y = player.Rectangle.Location.Y;
                         rectangle.Size = new Point(4,12);
+                        pos.X = player.Rectangle.Location.X+21;
+                        pos.Y = player.Rectangle.Location.Y;
                         lastMove.Y -= 2;
                     }
                     else if (kstate.IsKeyDown(Keys.A))
                     {
+                        rectangle.Size = new Point(12, 4);
                         pos.X = player.Rectangle.Location.X;
+                        pos.Y = player.Rectangle.Location.Y;
                         lastMove.X -= 2;
                         
                     }
                     else if (kstate.IsKeyDown(Keys.D))
                     {
-                        pos.X += 2;
+                        rectangle.Size = new Point(12, 4);
+                        pos.X = player.Rectangle.Location.X+13;
+                        pos.Y = player.Rectangle.Location.Y+21;
                         lastMove.X += 2;
                     }
                     else if (kstate.IsKeyDown(Keys.S))
                     {
-                        pos.Y += 2;
+                        rectangle.Size = new Point(4, 12);
+                        pos.X = player.Rectangle.Location.X;
+                        pos.Y = player.Rectangle.Location.Y+13;
                         lastMove.Y += 2;
                     }
                 }
