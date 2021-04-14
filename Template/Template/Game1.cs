@@ -78,6 +78,7 @@ namespace Template
             {
                 gameObjects.Remove(heavy);
                 gameObjects.Add(light);
+                light.SetPos(new Vector2(heavy.Rectangle.X));
                 break;
             }
             

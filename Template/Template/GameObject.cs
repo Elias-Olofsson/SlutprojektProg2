@@ -36,5 +36,10 @@ namespace Template
         {
             spriteBatch.Draw(texture, rectangle, Color.White);
         }
+
+        public virtual void SetPos(Vector2 vector2)
+        {
+            pos = vector2;
+        }
     }
 }
