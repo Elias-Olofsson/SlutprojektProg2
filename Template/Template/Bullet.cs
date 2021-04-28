@@ -12,7 +12,9 @@ namespace Template
 {
     class Bullet
     {
-        //List<Enemies> EnemyList = new List<Enemies>();
-        //public compare FindObjekt
+        public Bullet(Texture2D tex, Vector2 v, Point p)
+        {
+
+        }
     }
 }

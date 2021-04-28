@@ -12,10 +12,13 @@ namespace Template
     class Light : GameObject //klassen ärver från GameObjekt
     {
         Vector2 lastMove;
+        int lastKey;
         Player player;
-        public Light(Texture2D texture, Vector2 pos, Point point, Player player) : base(texture, pos, point) //olika grejer som light ska ha
+        Texture2D bulletTex;
+        public Light(Texture2D texture, Texture2D bulletTex, Vector2 pos, Point point, Player player) : base(texture, pos, point) //olika grejer som light ska ha
         {
             this.player = player;
+            this.bulletTex = bulletTex;
         }
 
         public override void Update()
@@ -31,6 +34,7 @@ namespace Template
                         pos.X = player.Rectangle.Location.X+21;
                         pos.Y = player.Rectangle.Location.Y;
                         lastMove.Y -= 2;
+                        int lastKey = 1;
                     }
                     else if (kstate.IsKeyDown(Keys.A))
                     {
@@ -38,7 +42,7 @@ namespace Template
                         pos.X = player.Rectangle.Location.X;
                         pos.Y = player.Rectangle.Location.Y;
                         lastMove.X -= 2;
-                        
+                        int lastKey = 2;
                     }
                     else if (kstate.IsKeyDown(Keys.D))
                     {
@@ -46,6 +50,7 @@ namespace Template
                         pos.X = player.Rectangle.Location.X+13;
                         pos.Y = player.Rectangle.Location.Y+21;
                         lastMove.X += 2;
+                        int lastKey = 3;
                     }
                     else if (kstate.IsKeyDown(Keys.S))
                     {
@@ -53,6 +58,12 @@ namespace Template
                         pos.X = player.Rectangle.Location.X;
                         pos.Y = player.Rectangle.Location.Y+13;
                         lastMove.Y += 2;
+                        int lastKey = 4;
+                    }
+                }
+                while(lastKey == 1){
+                    while (kstate.IsKeyDown(Keys.Space)) {
+                        bullet = new Bullet(bulletTex, new Vector2(10, 10), new Point(25, 25));
                     }
                 }
             }
