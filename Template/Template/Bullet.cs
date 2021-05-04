@@ -10,11 +10,11 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Template
 {
-    class Bullet
+    class Bullet : GameObject
     {
-        public Bullet(Texture2D tex, Vector2 v, Point p)
+        public Bullet(Texture2D texture, Vector2 v, Point p) : base(texture,v,p)
         {
-
+			
         }
     }
 }

@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Template
 {
-    class GameObject
+    public class GameObject
     {
         protected Texture2D texture; //textur
         protected Vector2 pos; //position

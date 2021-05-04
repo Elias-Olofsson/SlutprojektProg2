@@ -11,10 +11,12 @@ namespace Template
 {
     class Light : GameObject //klassen ärver från GameObjekt
     {
-        Vector2 lastMove;
-        int lastKey;
-        Player player;
-        Texture2D bulletTex;
+        private Vector2 lastMove;
+        private int lastKey;
+        private Player player;
+        private Texture2D bulletTex;
+		private Bullet bullet;
+		private int turned = 3;
         public Light(Texture2D texture, Texture2D bulletTex, Vector2 pos, Point point, Player player) : base(texture, pos, point) //olika grejer som light ska ha
         {
             this.player = player;
@@ -34,38 +36,55 @@ namespace Template
                         pos.X = player.Rectangle.Location.X+21;
                         pos.Y = player.Rectangle.Location.Y;
                         lastMove.Y -= 2;
-                        int lastKey = 1;
-                    }
+						turned = 1;
+
+					}
                     else if (kstate.IsKeyDown(Keys.A))
                     {
                         rectangle.Size = new Point(12, 4);
                         pos.X = player.Rectangle.Location.X;
                         pos.Y = player.Rectangle.Location.Y;
                         lastMove.X -= 2;
-                        int lastKey = 2;
-                    }
+						turned = 2;
+
+					}
                     else if (kstate.IsKeyDown(Keys.D))
                     {
                         rectangle.Size = new Point(12, 4);
                         pos.X = player.Rectangle.Location.X+13;
                         pos.Y = player.Rectangle.Location.Y+21;
                         lastMove.X += 2;
-                        int lastKey = 3;
-                    }
+						turned = 3;
+
+					}
                     else if (kstate.IsKeyDown(Keys.S))
                     {
                         rectangle.Size = new Point(4, 12);
                         pos.X = player.Rectangle.Location.X;
                         pos.Y = player.Rectangle.Location.Y+13;
                         lastMove.Y += 2;
-                        int lastKey = 4;
-                    }
+						turned = 4;
+
+					}
                 }
-                while(lastKey == 1){
-                    while (kstate.IsKeyDown(Keys.Space)) {
-                        bullet = new Bullet(bulletTex, new Vector2(10, 10), new Point(25, 25));
-                    }
-                }
+                if (kstate.IsKeyDown(Keys.Space)) {
+					if (turned == 1)
+					{
+						Game1.AddGameObject(new Bullet(bulletTex, new Vector2(player.Rectangle.Location.X + 21, player.Rectangle.Location.Y - 4), new Point(4, 4)));
+					}
+					else if (turned == 2)
+					{
+						Game1.AddGameObject(new Bullet(bulletTex, new Vector2(player.Rectangle.Location.X - 4, player.Rectangle.Location.Y), new Point(4, 4)));
+					}
+					else if (turned == 3)
+					{
+						Game1.AddGameObject(new Bullet(bulletTex, new Vector2(player.Rectangle.Location.X + 25, player.Rectangle.Location.Y +21), new Point(4, 4)));
+					}
+					else if (turned == 4)
+					{
+						Game1.AddGameObject( new Bullet(bulletTex, new Vector2(player.Rectangle.Location.X , player.Rectangle.Location.Y + 25), new Point(4, 4)));
+					}
+				}
             }
                 base.Update();
         }
