@@ -12,11 +12,10 @@ namespace Template
     class Light : GameObject //klassen ärver från GameObjekt
     {
         private Vector2 lastMove;
-        private int lastKey;
         private Player player;
         private Texture2D bulletTex;
-		private Bullet bullet;
-		private int turned = 3;
+		public static int turned = 3;
+		private int reload = 0;
         public Light(Texture2D texture, Texture2D bulletTex, Vector2 pos, Point point, Player player) : base(texture, pos, point) //olika grejer som light ska ha
         {
             this.player = player;
@@ -67,23 +66,31 @@ namespace Template
 
 					}
                 }
-                if (kstate.IsKeyDown(Keys.Space)) {
+                if (kstate.IsKeyDown(Keys.Space) & reload < 1) {
 					if (turned == 1)
 					{
-						Game1.AddGameObject(new Bullet(bulletTex, new Vector2(player.Rectangle.Location.X + 21, player.Rectangle.Location.Y - 4), new Point(4, 4)));
+						Game1.AddGameObject(new Bullet(bulletTex, new Vector2(player.Rectangle.Location.X + 21, player.Rectangle.Location.Y - 4), new Point(4, 4), turned));
+						reload = 50;
 					}
 					else if (turned == 2)
 					{
-						Game1.AddGameObject(new Bullet(bulletTex, new Vector2(player.Rectangle.Location.X - 4, player.Rectangle.Location.Y), new Point(4, 4)));
+						Game1.AddGameObject(new Bullet(bulletTex, new Vector2(player.Rectangle.Location.X - 4, player.Rectangle.Location.Y), new Point(4, 4), turned));
+						reload = 50;
 					}
 					else if (turned == 3)
 					{
-						Game1.AddGameObject(new Bullet(bulletTex, new Vector2(player.Rectangle.Location.X + 25, player.Rectangle.Location.Y +21), new Point(4, 4)));
+						Game1.AddGameObject(new Bullet(bulletTex, new Vector2(player.Rectangle.Location.X + 25, player.Rectangle.Location.Y +21), new Point(4, 4), turned));
+						reload = 50;
 					}
 					else if (turned == 4)
 					{
-						Game1.AddGameObject( new Bullet(bulletTex, new Vector2(player.Rectangle.Location.X , player.Rectangle.Location.Y + 25), new Point(4, 4)));
+						Game1.AddGameObject( new Bullet(bulletTex, new Vector2(player.Rectangle.Location.X , player.Rectangle.Location.Y + 25), new Point(4, 4), turned));
+						reload = 50;
 					}
+				}
+				else
+				{
+					reload -= 1;
 				}
             }
                 base.Update();

@@ -14,19 +14,19 @@ namespace Template
     /// </summary>
     public class Game1 : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        Player player;
-        Light light;
-        Heavy heavy;
-        static List<GameObject> gameObjects;
-		Texture2D redBox;
-		Texture2D blueBox;
-		Texture2D lightGreenBox;
-		Texture2D darkGreenBox;
-		Texture2D blackBox;
-		Texture2D greyBox;
-		Texture2D orangeBox;
+        private GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
+        private Player player;
+        private Light light;
+        private Heavy heavy;
+        private static List<GameObject> gameObjects;
+		private Texture2D redBox;
+		private Texture2D blueBox;
+		private Texture2D lightGreenBox;
+		private Texture2D darkGreenBox;
+		private Texture2D blackBox;
+		private Texture2D greyBox;
+		private Texture2D orangeBox;
 		public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -49,7 +49,6 @@ namespace Template
         {
             // TODO: Add your initialization logic here
             gameObjects = new List<GameObject>();
-
             base.Initialize();
         }
 
@@ -62,13 +61,13 @@ namespace Template
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            redBox		= Content.Load<Texture2D>("RödLåda"); //laddar in den röda färgen
-            blueBox		= Content.Load<Texture2D>("BlåLåda"); //laddar in de blå färgen
+            redBox = Content.Load<Texture2D>("RödLåda"); //laddar in den röda färgen
+            blueBox = Content.Load<Texture2D>("BlåLåda"); //laddar in de blå färgen
             lightGreenBox = Content.Load<Texture2D>("LjusGrönLåda"); //laddar in den ljusgröna färgen
             darkGreenBox = Content.Load<Texture2D>("MörkGrönLåda"); //laddar in den mörkgröna färgen
-            blackBox		= Content.Load<Texture2D>("SvartLåda"); //laddar in den svarta färgen
-            greyBox		= Content.Load<Texture2D>("GråLåda"); //laddar in den grå färgen
-            orangeBox		= Content.Load<Texture2D>("OrangeLåda"); //laddar in den orangea färgen
+            blackBox = Content.Load<Texture2D>("SvartLåda"); //laddar in den svarta färgen
+            greyBox = Content.Load<Texture2D>("GråLåda"); //laddar in den grå färgen
+            orangeBox = Content.Load<Texture2D>("OrangeLåda"); //laddar in den orangea färgen
             player = new Player(redBox, new Vector2(10, 10), new Point(25, 25)); //bestämmer position, storlek och att den ska ha utseendet av den röda lådan
             light = new Light(greyBox,orangeBox, new Vector2(23,31), new Point(12, 4), player);
             heavy = new Heavy(blackBox, new Vector2(light.Rectangle.X), new Point(20, 4), player);
@@ -103,19 +102,17 @@ namespace Template
 
 			
 			bool changed = new bool();
-			while (Player.behavior == PlayerBehavior.Heavy)
+			if (Player.behavior == PlayerBehavior.Heavy)
 			{
 				gameObjects.Remove(light);
 				gameObjects.Add(heavy);
 				changed = true;
-				break;
 			}
-			while (Player.behavior == PlayerBehavior.Light & changed == true)
+			if (Player.behavior == PlayerBehavior.Light & changed == true)
 			{
 				gameObjects.Remove(heavy);
 				gameObjects.Add(light);
 				light.SetPos(new Vector2(heavy.Rectangle.X));
-				break;
 			}
 
 
