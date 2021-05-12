@@ -70,7 +70,7 @@ namespace Template
             orangeBox = Content.Load<Texture2D>("OrangeLåda"); //laddar in den orangea färgen
             player = new Player(redBox, new Vector2(10, 10), new Point(25, 25)); //bestämmer position, storlek och att den ska ha utseendet av den röda lådan
             light = new Light(greyBox,orangeBox, new Vector2(23,31), new Point(12, 4), player);
-            heavy = new Heavy(blackBox, new Vector2(light.Rectangle.X), new Point(20, 4), player);
+            heavy = new Heavy(blackBox, orangeBox, new Vector2(light.Rectangle.X), new Point(20, 4), player);
             gameObjects.Add(player);
             gameObjects.Add(light);
 			gameObjects.Add(new Wall(blueBox, new Vector2(0, 0), new Point(10, 10))); //alla till radbytet är väggar med deras storlekar och positioner
@@ -106,13 +106,16 @@ namespace Template
 			{
 				gameObjects.Remove(light);
 				gameObjects.Add(heavy);
+				light.SetPos(new Vector2(light.Rectangle.X));
+				light.SetPos(new Vector2(light.Rectangle.Y));
 				changed = true;
 			}
-			if (Player.behavior == PlayerBehavior.Light & changed == true)
+			if (Player.behavior == PlayerBehavior.Light && changed == true)
 			{
 				gameObjects.Remove(heavy);
 				gameObjects.Add(light);
 				light.SetPos(new Vector2(heavy.Rectangle.X));
+				light.SetPos(new Vector2(heavy.Rectangle.Y));
 			}
 
 

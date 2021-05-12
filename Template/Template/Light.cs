@@ -66,7 +66,7 @@ namespace Template
 
 					}
                 }
-                if (kstate.IsKeyDown(Keys.Space) & reload < 1) {
+                if (kstate.IsKeyDown(Keys.Space) && reload < 1) {
 					if (turned == 1)
 					{
 						Game1.AddGameObject(new Bullet(bulletTex, new Vector2(player.Rectangle.Location.X + 21, player.Rectangle.Location.Y - 4), new Point(4, 4), turned));

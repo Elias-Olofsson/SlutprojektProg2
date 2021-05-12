@@ -56,11 +56,11 @@ namespace Template
                 lastMove.Y += 1 * speedMultiplier;
             }
 
-            if (kstate.IsKeyDown(Keys.NumPad0)) //alla här gör så att du kan trycka för att ändra lägen
+            if (kstate.IsKeyDown(Keys.Q)) //alla här gör så att du kan trycka för att ändra lägen
             {
                 behavior = PlayerBehavior.Light;
             }
-            else if (kstate.IsKeyDown(Keys.NumPad1))
+            else if (kstate.IsKeyDown(Keys.E))
             {
                 behavior = PlayerBehavior.Heavy;
             }

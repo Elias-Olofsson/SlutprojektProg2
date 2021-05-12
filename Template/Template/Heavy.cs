@@ -13,12 +13,13 @@ namespace Template
     {
         private Vector2 lastMove;
         private Player player;
-		private int reload = 0;
+		private float reload = 0;
 		private Texture2D bulletTex;
-		public Heavy(Texture2D texture, Vector2 pos, Point point, Player player) : base(texture, pos, point) //olika grejer som heavy ska ha
+		public Heavy(Texture2D texture, Texture2D bulletTex, Vector2 pos, Point point, Player player) : base(texture, pos, point) //olika grejer som heavy ska ha
         {
             this.player = player;
-        }
+			this.bulletTex = bulletTex;
+		}
         public override void Update()
         {
             if (Player.behavior == PlayerBehavior.Heavy)
@@ -59,32 +60,32 @@ namespace Template
 						lastMove.Y += 2;
 						Light.turned = 4;
 					}
-					if (kstate.IsKeyDown(Keys.Space) & reload < 1)
+					if (kstate.IsKeyDown(Keys.Space) && reload <= 0)
 					{
 						if (Light.turned == 1)
 						{
 							Game1.AddGameObject(new Bullet(bulletTex, new Vector2(player.Rectangle.Location.X + 21, player.Rectangle.Location.Y - 4), new Point(4, 4), Light.turned));
-							reload = 10;
+							reload = 1;
 						}
 						else if (Light.turned == 2)
 						{
 							Game1.AddGameObject(new Bullet(bulletTex, new Vector2(player.Rectangle.Location.X - 4, player.Rectangle.Location.Y), new Point(4, 4), Light.turned));
-							reload = 10;
+							reload = 1;
 						}
 						else if (Light.turned == 3)
 						{
 							Game1.AddGameObject(new Bullet(bulletTex, new Vector2(player.Rectangle.Location.X + 25, player.Rectangle.Location.Y + 21), new Point(4, 4), Light.turned));
-							reload = 10;
+							reload = 1;
 						}
 						else if (Light.turned == 4)
 						{
 							Game1.AddGameObject(new Bullet(bulletTex, new Vector2(player.Rectangle.Location.X, player.Rectangle.Location.Y + 25), new Point(4, 4), Light.turned));
-							reload = 10;
+							reload = 1;
 						}
 					}
 					else
 					{
-						reload -= 1;
+						reload -= 1 / 60f;
 					}
 				}
 				base.Update();
