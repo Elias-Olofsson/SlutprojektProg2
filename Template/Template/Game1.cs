@@ -19,6 +19,8 @@ namespace Template
         private Player player;
         private Light light;
         private Heavy heavy;
+		private Fast fast;
+		private Slow slow;
         private static List<GameObject> gameObjects;
 		private Texture2D redBox;
 		private Texture2D blueBox;
@@ -27,6 +29,7 @@ namespace Template
 		private Texture2D blackBox;
 		private Texture2D greyBox;
 		private Texture2D orangeBox;
+		bool changed = new bool();
 		public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -71,10 +74,13 @@ namespace Template
             player = new Player(redBox, new Vector2(10, 10), new Point(25, 25)); //bestämmer position, storlek och att den ska ha utseendet av den röda lådan
             light = new Light(greyBox,orangeBox, new Vector2(23,31), new Point(12, 4), player);
             heavy = new Heavy(blackBox, orangeBox, new Vector2(light.Rectangle.X), new Point(20, 4), player);
+			fast = new Fast(lightGreenBox, new Vector2(400, 200), new Point(15, 15));
+			slow = new Slow(darkGreenBox, new Vector2(400, 300), new Point(35, 35));
             gameObjects.Add(player);
             gameObjects.Add(light);
+			gameObjects.Add(fast);
+			gameObjects.Add(slow);
 			gameObjects.Add(new Wall(blueBox, new Vector2(0, 0), new Point(10, 10))); //alla till radbytet är väggar med deras storlekar och positioner
-
 			// TODO: use this.Content to load your game content here 
 		}
 
@@ -101,21 +107,17 @@ namespace Template
             KeyboardState kstate = Keyboard.GetState(); //kollar vilka knappar som trycks innan updateringen
 
 			
-			bool changed = new bool();
-			if (Player.behavior == PlayerBehavior.Heavy)
-			{
+			
+			if (Player.behavior == PlayerBehavior.Heavy && gameObjects.Where(a => a is Heavy).ToArray().Length == 0) //kollar om den ska bli heavy om man gjort den heavy i player och lägger in en
+			{																										//array och kollar den för att se till så att heavy bara skapas en gång
 				gameObjects.Remove(light);
 				gameObjects.Add(heavy);
-				light.SetPos(new Vector2(light.Rectangle.X));
-				light.SetPos(new Vector2(light.Rectangle.Y));
 				changed = true;
 			}
-			if (Player.behavior == PlayerBehavior.Light && changed == true)
-			{
-				gameObjects.Remove(heavy);
+			if (Player.behavior == PlayerBehavior.Light && changed == true && gameObjects.Where(b => b is Light).ToArray().Length == 0) //kollar om den ska bli light om man gjort den light i 
+			{                                                                                                       //player och lägger in en array och kollar den för att se till så att light 
+				gameObjects.Remove(heavy);                                                                          //bara skapas en gång
 				gameObjects.Add(light);
-				light.SetPos(new Vector2(heavy.Rectangle.X));
-				light.SetPos(new Vector2(heavy.Rectangle.Y));
 			}
 
 

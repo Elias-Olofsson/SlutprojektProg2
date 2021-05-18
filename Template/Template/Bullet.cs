@@ -10,8 +10,8 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Template
 {
-    class Bullet : GameObject
-    {
+    class Bullet : GameObject //klassen ärver från GameObjekt
+	{
 		private float speed = 6;
 		private int direction;
         public Bullet(Texture2D texture, Vector2 v, Point p, int turned) : base(texture,v,p)

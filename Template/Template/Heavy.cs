@@ -60,33 +60,38 @@ namespace Template
 						lastMove.Y += 2;
 						Light.turned = 4;
 					}
-					if (kstate.IsKeyDown(Keys.Space) && reload <= 0)
+				}
+				Console.WriteLine("Shoot check, " + reload);
+
+				if (kstate.IsKeyDown(Keys.Space) && reload < 1)
+				{
+					Console.WriteLine("Shooting, " + reload);
+					if (Light.turned == 1)
 					{
-						if (Light.turned == 1)
-						{
-							Game1.AddGameObject(new Bullet(bulletTex, new Vector2(player.Rectangle.Location.X + 21, player.Rectangle.Location.Y - 4), new Point(4, 4), Light.turned));
-							reload = 1;
-						}
-						else if (Light.turned == 2)
-						{
-							Game1.AddGameObject(new Bullet(bulletTex, new Vector2(player.Rectangle.Location.X - 4, player.Rectangle.Location.Y), new Point(4, 4), Light.turned));
-							reload = 1;
-						}
-						else if (Light.turned == 3)
-						{
-							Game1.AddGameObject(new Bullet(bulletTex, new Vector2(player.Rectangle.Location.X + 25, player.Rectangle.Location.Y + 21), new Point(4, 4), Light.turned));
-							reload = 1;
-						}
-						else if (Light.turned == 4)
-						{
-							Game1.AddGameObject(new Bullet(bulletTex, new Vector2(player.Rectangle.Location.X, player.Rectangle.Location.Y + 25), new Point(4, 4), Light.turned));
-							reload = 1;
-						}
+						Game1.AddGameObject(new Bullet(bulletTex, new Vector2(player.Rectangle.Location.X + 21, player.Rectangle.Location.Y - 4), new Point(4, 4), Light.turned));
+						reload = 20;
 					}
-					else
+					else if (Light.turned == 2)
 					{
-						reload -= 1 / 60f;
+						Game1.AddGameObject(new Bullet(bulletTex, new Vector2(player.Rectangle.Location.X - 4, player.Rectangle.Location.Y), new Point(4, 4), Light.turned));
+						reload = 20;
 					}
+					else if (Light.turned == 3)
+					{
+						Game1.AddGameObject(new Bullet(bulletTex, new Vector2(player.Rectangle.Location.X + 25, player.Rectangle.Location.Y + 21), new Point(4, 4), Light.turned));
+						reload = 20;
+					}
+					else if (Light.turned == 4)
+					{
+						Game1.AddGameObject(new Bullet(bulletTex, new Vector2(player.Rectangle.Location.X, player.Rectangle.Location.Y + 25), new Point(4, 4), Light.turned));
+						reload = 20;
+					}
+				}
+				else
+				{
+					Console.WriteLine("Reloading, " + reload);
+
+					reload -= 1;
 				}
 				base.Update();
             }

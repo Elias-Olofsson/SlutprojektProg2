@@ -17,7 +17,7 @@ namespace Template
 
         Vector2 lastMove;
 
-        public Player(Texture2D texture, Vector2 pos, Point point) : base(texture, pos, point) //olika grejer som spelaren ska ha
+        public Player(Texture2D texture, Vector2 pos, Point point) : base(texture, pos, point) //olika grejer som spelaren ska ha från GameObjekt
         {
             
         }
@@ -56,7 +56,7 @@ namespace Template
                 lastMove.Y += 1 * speedMultiplier;
             }
 
-            if (kstate.IsKeyDown(Keys.Q)) //alla här gör så att du kan trycka för att ändra lägen
+            if (kstate.IsKeyDown(Keys.Q)) //alla här gör så att du kan trycka för att ändra lägen, q för light och e för heavy
             {
                 behavior = PlayerBehavior.Light;
             }
