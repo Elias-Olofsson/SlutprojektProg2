@@ -74,14 +74,16 @@ namespace Template
             player = new Player(redBox, new Vector2(10, 10), new Point(25, 25)); //bestämmer position, storlek och att den ska ha utseendet av den röda lådan
             light = new Light(greyBox,orangeBox, new Vector2(23,31), new Point(12, 4), player);
             heavy = new Heavy(blackBox, orangeBox, new Vector2(light.Rectangle.X), new Point(20, 4), player);
-			fast = new Fast(lightGreenBox, new Vector2(400, 200), new Point(15, 15));
-			slow = new Slow(darkGreenBox, new Vector2(400, 300), new Point(35, 35));
+			fast = new Fast(lightGreenBox, new Vector2(700, 450), new Point(15, 15));
+			slow = new Slow(darkGreenBox, new Vector2(750, 400), new Point(35, 35));
             gameObjects.Add(player);
-            gameObjects.Add(light);
 			gameObjects.Add(fast);
 			gameObjects.Add(slow);
-			gameObjects.Add(new Wall(blueBox, new Vector2(0, 0), new Point(10, 10))); //alla till radbytet är väggar med deras storlekar och positioner
-			// TODO: use this.Content to load your game content here 
+			gameObjects.Add(light);
+			gameObjects.Add(new Wall(blueBox, new Vector2(0, 0), new Point(10, 480))); //alla till radbytet är väggar med deras storlekar och positioner
+			gameObjects.Add(new Wall(blueBox, new Vector2(10, 0), new Point(780, 10)));
+			gameObjects.Add(new Wall(blueBox, new Vector2(790, 0), new Point(10, 480)));
+			gameObjects.Add(new Wall(blueBox, new Vector2(10, 470), new Point(780, 10))); 
 		}
 
 		/// <summary>
@@ -105,7 +107,7 @@ namespace Template
 
             // TODO: Add your update logic here
             KeyboardState kstate = Keyboard.GetState(); //kollar vilka knappar som trycks innan updateringen
-
+			
 			
 			
 			if (Player.behavior == PlayerBehavior.Heavy && gameObjects.Where(a => a is Heavy).ToArray().Length == 0) //kollar om den ska bli heavy om man gjort den heavy i player och lägger in en
@@ -127,9 +129,12 @@ namespace Template
             {
                 gameObjects[i].Update();
             }
-            Player player = gameObjects[0] as Player; //gör så att spelaren/den röda lådan får position 1 i listan
 
-            for (int i = 1; i < gameObjects.Count; i++) //för varje spel objekt som spelaren går in i stoppas spelaren
+            Player player = gameObjects[0] as Player; //gör så att spelaren/den röda lådan får position 1 i listan
+			Fast fast = gameObjects[1] as Fast; //gör så att fast/den ljusgröna lådan får position 2 i listan
+			Slow slow = gameObjects[2] as Slow; //gör så att slow/den mörkgröna lådan får position 3 i listan
+
+			for (int i = 1; i < gameObjects.Count; i++) //för varje spel objekt som spelaren går in i stoppas spelaren
             {
                 if(!(gameObjects[i] is Light || gameObjects[i] is Heavy))//gör så att spelaren inte koliderar med light och heavy
                 {
@@ -137,9 +142,29 @@ namespace Template
                     {
                         player.Collision();
                     }
+
+					if(player.Rectangle.Intersects(fast.Rectangle) || (player.Rectangle.Intersects(slow.Rectangle)))
+					{
+						Exit();
+					}
                 }
             }
-            base.Update(gameTime);
+
+			for (int i = 2; i < gameObjects.Count; i++)
+			{
+				if (fast.Rectangle.Intersects(gameObjects[i].Rectangle))
+				{
+					fast.Collision();
+				}
+			}
+			for (int i = 3; i < gameObjects.Count; i++)
+			{
+				if (fast.Rectangle.Intersects(gameObjects[i].Rectangle))
+				{
+					slow.Collision();
+				}
+			}
+			base.Update(gameTime);
         }
 
         /// <summary>
