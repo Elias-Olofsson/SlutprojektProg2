@@ -33,6 +33,7 @@ namespace Template
 		public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            IsMouseVisible = true;
             Content.RootDirectory = "Content";
 
         }
@@ -149,17 +150,17 @@ namespace Template
 					}
                 }
             }
-
+            
 			for (int i = 2; i < gameObjects.Count; i++)
 			{
 				if (fast.Rectangle.Intersects(gameObjects[i].Rectangle))
 				{
-					fast.Collision();
+			        fast.Collision();
 				}
 			}
 			for (int i = 3; i < gameObjects.Count; i++)
 			{
-				if (fast.Rectangle.Intersects(gameObjects[i].Rectangle))
+				if (slow.Rectangle.Intersects(gameObjects[i].Rectangle))
 				{
 					slow.Collision();
 				}
@@ -185,6 +186,11 @@ namespace Template
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        bool TestCol(Rectangle obj, Rectangle wall)
+        {
+            return obj.Intersects(wall);
         }
     }
 }
