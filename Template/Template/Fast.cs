@@ -13,6 +13,10 @@ namespace Template
 	{
 		private Vector2 speed;
 		private Random random;
+		public Rectangle TestPos
+        {
+			get { return new Rectangle(new Point((int)(pos.X + speed.X*3), (int)(pos.Y + speed.Y*3)), Rectangle.Size); }
+        }
 		public Fast(Texture2D texture, Vector2 pos, Point point) : base(texture, pos, point) //olika grejer som fienden ska ha från GameObjekt
 		{
 			random = new Random();
@@ -30,13 +34,22 @@ namespace Template
 		private float RandomFloat()
 		{
 			float r = (float)(random.NextDouble());
-			r = r*2 - 1;
+			r = r * 2 - 1;
 			return r;
 		}
 
 		public void Collision()
 		{
-			speed.X *= -1;
-		}
+			//speed = new Vector2(RandomFloat(), RandomFloat()) * 3;
+			if(pos.X < 10 || pos.X > 790 -15)
+            {
+				speed.X *= -1;
+            }
+
+			if(pos.Y < 10 || pos.Y > 470 - 15)
+            {
+				speed.Y *= -1;
+			}
+		}		
 	}
 }

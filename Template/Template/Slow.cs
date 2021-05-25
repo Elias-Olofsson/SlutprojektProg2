@@ -17,7 +17,7 @@ namespace Template
 			random = new Random();
 			speed = new Vector2(RandomFloat(), RandomFloat());
 			speed.Normalize();
-			speed *= 3;
+			speed *= 1;
 		}
 
 		public override void Update()
@@ -35,7 +35,15 @@ namespace Template
 
 		public void Collision()
 		{
-			speed.X *= -1;
+			if (pos.X < 10 || pos.X > 790 - 35)
+			{
+				speed.X *= -1;
+			}
+
+			if (pos.Y < 10 || pos.Y > 470 - 35)
+			{
+				speed.Y *= -1;
+			}
 		}
 	}
 }
