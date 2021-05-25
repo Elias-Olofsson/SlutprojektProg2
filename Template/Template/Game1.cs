@@ -14,7 +14,7 @@ namespace Template
     /// </summary>
     public class Game1 : Game
     {
-        private GraphicsDeviceManager graphics;
+        private GraphicsDeviceManager graphics; //variabler, en lista, texturer och instanser av klasser
         private SpriteBatch spriteBatch;
         private Player player;
         private Light light;
@@ -37,7 +37,7 @@ namespace Template
 
         }
 
-		public static void AddGameObject(GameObject o)
+		public static void AddGameObject(GameObject o) //ger listan gameObjects spelobjekten
 		{
 			gameObjects.Add(o);
 		}
@@ -50,7 +50,6 @@ namespace Template
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             gameObjects = new List<GameObject>();
             base.Initialize();
         }
@@ -72,14 +71,14 @@ namespace Template
             greyBox = Content.Load<Texture2D>("GråLåda"); //laddar in den grå färgen
             orangeBox = Content.Load<Texture2D>("OrangeLåda"); //laddar in den orangea färgen
             player = new Player(redBox, new Vector2(10, 10), new Point(25, 25)); //bestämmer position, storlek och att den ska ha utseendet av den röda lådan
-            light = new Light(greyBox,orangeBox, new Vector2(23,31), new Point(12, 4), player);
-            heavy = new Heavy(blackBox, orangeBox, new Vector2(light.Rectangle.X), new Point(20, 4), player);
-			fast = new Fast(lightGreenBox, new Vector2(700, 450), new Point(15, 15));
-			slow = new Slow(darkGreenBox, new Vector2(750, 400), new Point(35, 35));
-            gameObjects.Add(player);
-			gameObjects.Add(fast);
-			gameObjects.Add(slow);
-			gameObjects.Add(light);
+            light = new Light(greyBox,orangeBox, new Vector2(23,31), new Point(12, 4), player); //bestämmer skottfärg, position, storlek och att den ska ha utseendet av den gråa lådan
+			heavy = new Heavy(blackBox, orangeBox, new Vector2(light.Rectangle.X), new Point(20, 4), player); //bestämmer skottfärg, position, storlek och att den ska ha utseendet av den svarta lådan
+			fast = new Fast(lightGreenBox, new Vector2(700, 450), new Point(15, 15)); //bestämmer position, storlek och att den ska ha utseendet av den ljusgröna lådan
+			slow = new Slow(darkGreenBox, new Vector2(750, 400), new Point(35, 35)); //bestämmer position, storlek och att den ska ha utseendet av den mörkgröna lådan
+			gameObjects.Add(player); //lägger till player i listan
+			gameObjects.Add(fast); //lägger till fast i listan
+			gameObjects.Add(slow); //lägger till slow i listan
+			gameObjects.Add(light); //lägger till light i listan
 			gameObjects.Add(new Wall(blueBox, new Vector2(0, 0), new Point(10, 480))); //alla till radbytet är väggar med deras storlekar och positioner
 			gameObjects.Add(new Wall(blueBox, new Vector2(10, 0), new Point(780, 10)));
 			gameObjects.Add(new Wall(blueBox, new Vector2(790, 0), new Point(10, 480)));
@@ -92,7 +91,7 @@ namespace Template
 		/// </summary>
 		protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+
         }
 
         /// <summary>
@@ -103,23 +102,22 @@ namespace Template
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+                Exit(); //stänger spelet om man trycker esc
 
-            // TODO: Add your update logic here
             KeyboardState kstate = Keyboard.GetState(); //kollar vilka knappar som trycks innan updateringen
 			
 			
 			
 			if (Player.behavior == PlayerBehavior.Heavy && gameObjects.Where(a => a is Heavy).ToArray().Length == 0) //kollar om den ska bli heavy om man gjort den heavy i player och lägger in en
 			{																										//array och kollar den för att se till så att heavy bara skapas en gång
-				gameObjects.Remove(light);
-				gameObjects.Add(heavy);
+				gameObjects.Remove(light); //tar bort den grå låden
+				gameObjects.Add(heavy); //lägger till den svarta lådan
 				changed = true;
 			}
 			if (Player.behavior == PlayerBehavior.Light && changed == true && gameObjects.Where(b => b is Light).ToArray().Length == 0) //kollar om den ska bli light om man gjort den light i 
-			{                                                                                                       //player och lägger in en array och kollar den för att se till så att light 
-				gameObjects.Remove(heavy);                                                                          //bara skapas en gång
-				gameObjects.Add(light);
+			{                                                                                                       //player och lägger in en array och kollar den för att se till så att light bara skapas en gång
+				gameObjects.Remove(heavy); //tar bort den svarta låden                                                                         
+				gameObjects.Add(light); //lägger till den grå lådan
 			}
 
 
@@ -140,28 +138,28 @@ namespace Template
                 {
                     if (player.Rectangle.Intersects(gameObjects[i].Rectangle))//gör så att spelaren koliderar med alla andra object i gameobject
                     {
-                        player.Collision();
+                        player.Collision(); //sätter igång Collisionsräknaren i player
                     }
 
-					if(player.Rectangle.Intersects(fast.Rectangle) || (player.Rectangle.Intersects(slow.Rectangle)))
+					if(player.Rectangle.Intersects(fast.Rectangle) || (player.Rectangle.Intersects(slow.Rectangle))) //gör så att programmet avslutas om man krockar med fienderna
 					{
 						Exit();
 					}
                 }
             }
 
-			for (int i = 2; i < gameObjects.Count; i++)
+			for (int i = 2; i < gameObjects.Count; i++) //för alla över fast i listan
 			{
-				if (fast.Rectangle.Intersects(gameObjects[i].Rectangle))
+				if (fast.Rectangle.Intersects(gameObjects[i].Rectangle)) //om fast krockar
 				{
-					fast.Collision();
+					fast.Collision(); //sätter igång Collisionsräknaren i fast
 				}
 			}
-			for (int i = 3; i < gameObjects.Count; i++)
+			for (int i = 3; i < gameObjects.Count; i++) //för alla över sow i listan
 			{
-				if (fast.Rectangle.Intersects(gameObjects[i].Rectangle))
+				if (slow.Rectangle.Intersects(gameObjects[i].Rectangle)) //om slow krockar
 				{
-					slow.Collision();
+					slow.Collision(); //sätter igång Collisionsräknaren i slow
 				}
 			}
 			base.Update(gameTime);
@@ -173,10 +171,7 @@ namespace Template
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            //GraphicsDevice.Clear(Color.CornflowerBlue);
             GraphicsDevice.Clear(Color.Black); //gör bakgrunden svart
-
-            // TODO: Add your drawing code here.
             spriteBatch.Begin();
             foreach (GameObject gameObject in gameObjects) //för varje gameobjekt i listan rita ut dem
             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,10 +25,10 @@ namespace Template
 
         public override void Update() //gör så att den inte updateras 
         {
-            lastMove = new Vector2();
+            lastMove = new Vector2(); //skapar en position för var man var
 
             KeyboardState kstate = Keyboard.GetState(); //läser om någon knapp trycks in
-            if (behavior == PlayerBehavior.Light) //bestämmer hastigheten och positionsändring om spelaren är light och positionsändringenS bestäms av om något är i vägen
+            if (behavior == PlayerBehavior.Light) //bestämmer hastigheten och positionsändring om spelaren är light och positionsändringen bestäms av om något är i vägen
             {
                 speedMultiplier = 2;
             }
@@ -56,17 +57,28 @@ namespace Template
                 lastMove.Y += 1 * speedMultiplier;
             }
 
-            if (kstate.IsKeyDown(Keys.Q)) //alla här gör så att du kan trycka för att ändra lägen, q för light och e för heavy
+            if (kstate.IsKeyDown(Keys.Q)) //alla här gör så att du kan trycka för att ändra lägen, Q för light och E för heavy
             {
                 behavior = PlayerBehavior.Light;
             }
             else if (kstate.IsKeyDown(Keys.E))
             {
                 behavior = PlayerBehavior.Heavy;
+				PageFile();
             }
 
             base.Update(); //gör så att den updatera nu efter istället
         }
+
+		void PageFile() //ger en achevement i filform
+		{
+			if (!File.Exists("achievement.file")) //endast om filen redan inte finns
+			{
+				BinaryWriter fileTextMaker = new BinaryWriter(new FileStream("achievement.file", FileMode.OpenOrCreate, FileAccess.Write)); //bestämmer var den ska skriva
+				fileTextMaker.Write("You have managed to equip the heavy weapon."); //bestämmer vad den ska skriva
+				fileTextMaker.Close(); //avslutar filskrivandet
+			}
+		}
 
         public override void Draw(SpriteBatch spriteBatch) //allt här ritar ut spelaren i båda originallägena
         {
@@ -81,14 +93,11 @@ namespace Template
 
             }
         }
-        public void Collision()
+        public void Collision() //gör så att man backar en positionsändring när man går in i något
         {
             pos += lastMove * -1;
         }
     }
-
-    
-
 
     public enum PlayerBehavior //gör så att de olika spellägena får siffror så att t.ex normal är läge 0
     {

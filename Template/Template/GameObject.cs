@@ -15,12 +15,12 @@ namespace Template
         protected Texture2D texture; //textur
         protected Vector2 pos; //position
         protected Rectangle rectangle; //rektangel
-        public Rectangle Rectangle
+        public Rectangle Rectangle //gör så att man kan få tag på rektangel i orelaterade klasser trots att den är protected
         {
             get { return rectangle; }
         }
 
-        public GameObject(Texture2D texture, Vector2 pos, Point size)
+        public GameObject(Texture2D texture, Vector2 pos, Point size) //bestämmer egenskaper för spelobjekt
         {
             this.texture = texture;
             this.pos = pos;
@@ -37,7 +37,7 @@ namespace Template
             spriteBatch.Draw(texture, rectangle, Color.White);
         }
 
-        public virtual void SetPos(Vector2 vector2)
+        public virtual void SetPos(Vector2 vector2) //bestämmer att pos är position
         {
             pos = vector2;
         }
